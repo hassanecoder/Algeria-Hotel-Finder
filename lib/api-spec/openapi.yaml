@@ -1,22 +1,31 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Algeria Hotels API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: hotels
+    description: Hotel listings and details
+  - name: cities
+    description: Algerian cities directory
+  - name: bookings
+    description: Hotel booking operations
+  - name: reviews
+    description: Hotel reviews
+  - name: amenities
+    description: Hotel amenities
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +33,252 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /hotels:
+    get:
+      operationId: getHotels
+      tags: [hotels]
+      summary: List hotels with optional filters
+      parameters:
+        - name: city
+          in: query
+          schema:
+            type: string
+        - name: minPrice
+          in: query
+          schema:
+            type: number
+        - name: maxPrice
+          in: query
+          schema:
+            type: number
+        - name: stars
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 5
+        - name: amenities
+          in: query
+          schema:
+            type: string
+          description: Comma-separated list of amenity slugs
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 12
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum: [price_asc, price_desc, rating_desc, name_asc]
+      responses:
+        "200":
+          description: List of hotels
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HotelListResponse"
+
+  /hotels/{id}:
+    get:
+      operationId: getHotel
+      tags: [hotels]
+      summary: Get hotel details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Hotel details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HotelDetail"
+        "404":
+          description: Hotel not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /hotels/featured:
+    get:
+      operationId: getFeaturedHotels
+      tags: [hotels]
+      summary: Get featured hotels
+      responses:
+        "200":
+          description: Featured hotels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Hotel"
+
+  /cities:
+    get:
+      operationId: getCities
+      tags: [cities]
+      summary: List all Algerian cities
+      responses:
+        "200":
+          description: List of cities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/City"
+
+  /cities/{slug}:
+    get:
+      operationId: getCity
+      tags: [cities]
+      summary: Get city details
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: City details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CityDetail"
+        "404":
+          description: City not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /bookings:
+    post:
+      operationId: createBooking
+      tags: [bookings]
+      summary: Create a hotel booking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBookingRequest"
+      responses:
+        "201":
+          description: Booking created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Booking"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /bookings/{reference}:
+    get:
+      operationId: getBooking
+      tags: [bookings]
+      summary: Get booking by reference
+      parameters:
+        - name: reference
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Booking details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Booking"
+        "404":
+          description: Booking not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /hotels/{hotelId}/reviews:
+    get:
+      operationId: getHotelReviews
+      tags: [reviews]
+      summary: Get reviews for a hotel
+      parameters:
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of reviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+    post:
+      operationId: createReview
+      tags: [reviews]
+      summary: Create a review for a hotel
+      parameters:
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReviewRequest"
+      responses:
+        "201":
+          description: Review created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Review"
+
+  /amenities:
+    get:
+      operationId: getAmenities
+      tags: [amenities]
+      summary: List all amenities
+      responses:
+        "200":
+          description: List of amenities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Amenity"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +289,374 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+        - error
+        - message
+
+    Amenity:
+      type: object
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        name:
+          type: string
+        icon:
+          type: string
+      required:
+        - id
+        - slug
+        - name
+        - icon
+
+    City:
+      type: object
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        name:
+          type: string
+        nameAr:
+          type: string
+        region:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        hotelCount:
+          type: integer
+      required:
+        - id
+        - slug
+        - name
+        - nameAr
+        - region
+        - description
+        - imageUrl
+        - hotelCount
+
+    CityDetail:
+      allOf:
+        - $ref: "#/components/schemas/City"
+        - type: object
+          properties:
+            hotels:
+              type: array
+              items:
+                $ref: "#/components/schemas/Hotel"
+          required:
+            - hotels
+
+    Hotel:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        city:
+          type: string
+        citySlug:
+          type: string
+        address:
+          type: string
+        stars:
+          type: integer
+        rating:
+          type: number
+        reviewCount:
+          type: integer
+        pricePerNight:
+          type: number
+        currency:
+          type: string
+        imageUrl:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        amenities:
+          type: array
+          items:
+            type: string
+        isFeatured:
+          type: boolean
+        description:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+      required:
+        - id
+        - name
+        - slug
+        - city
+        - citySlug
+        - address
+        - stars
+        - rating
+        - reviewCount
+        - pricePerNight
+        - currency
+        - imageUrl
+        - images
+        - amenities
+        - isFeatured
+        - description
+
+    HotelDetail:
+      allOf:
+        - $ref: "#/components/schemas/Hotel"
+        - type: object
+          properties:
+            rooms:
+              type: array
+              items:
+                $ref: "#/components/schemas/Room"
+            reviews:
+              type: array
+              items:
+                $ref: "#/components/schemas/Review"
+            nearbyAttractions:
+              type: array
+              items:
+                type: string
+            checkInTime:
+              type: string
+            checkOutTime:
+              type: string
+            policies:
+              type: string
+          required:
+            - rooms
+            - reviews
+            - checkInTime
+            - checkOutTime
+
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+        hotelId:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+        pricePerNight:
+          type: number
+        capacity:
+          type: integer
+        bedType:
+          type: string
+        size:
+          type: number
+        amenities:
+          type: array
+          items:
+            type: string
+        imageUrl:
+          type: string
+      required:
+        - id
+        - hotelId
+        - name
+        - type
+        - pricePerNight
+        - capacity
+        - bedType
+        - size
+        - amenities
+        - imageUrl
+
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+        hotelId:
+          type: integer
+        guestName:
+          type: string
+        guestCountry:
+          type: string
+        rating:
+          type: number
+        title:
+          type: string
+        comment:
+          type: string
+        date:
+          type: string
+        categories:
+          type: object
+          properties:
+            cleanliness:
+              type: number
+            location:
+              type: number
+            service:
+              type: number
+            value:
+              type: number
+      required:
+        - id
+        - hotelId
+        - guestName
+        - guestCountry
+        - rating
+        - comment
+        - date
+
+    CreateReviewRequest:
+      type: object
+      properties:
+        guestName:
+          type: string
+        guestCountry:
+          type: string
+        rating:
+          type: number
+          minimum: 1
+          maximum: 5
+        title:
+          type: string
+        comment:
+          type: string
+      required:
+        - guestName
+        - guestCountry
+        - rating
+        - comment
+
+    HotelListResponse:
+      type: object
+      properties:
+        hotels:
+          type: array
+          items:
+            $ref: "#/components/schemas/Hotel"
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+        totalPages:
+          type: integer
+      required:
+        - hotels
+        - total
+        - page
+        - limit
+        - totalPages
+
+    CreateBookingRequest:
+      type: object
+      properties:
+        hotelId:
+          type: integer
+        roomId:
+          type: integer
+        guestName:
+          type: string
+        guestEmail:
+          type: string
+        guestPhone:
+          type: string
+        checkIn:
+          type: string
+          format: date
+        checkOut:
+          type: string
+          format: date
+        adults:
+          type: integer
+          minimum: 1
+        children:
+          type: integer
+          minimum: 0
+        specialRequests:
+          type: string
+      required:
+        - hotelId
+        - roomId
+        - guestName
+        - guestEmail
+        - guestPhone
+        - checkIn
+        - checkOut
+        - adults
+
+    Booking:
+      type: object
+      properties:
+        id:
+          type: integer
+        reference:
+          type: string
+        hotelId:
+          type: integer
+        roomId:
+          type: integer
+        hotelName:
+          type: string
+        roomName:
+          type: string
+        guestName:
+          type: string
+        guestEmail:
+          type: string
+        guestPhone:
+          type: string
+        checkIn:
+          type: string
+        checkOut:
+          type: string
+        adults:
+          type: integer
+        children:
+          type: integer
+        specialRequests:
+          type: string
+        totalPrice:
+          type: number
+        currency:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - id
+        - reference
+        - hotelId
+        - roomId
+        - hotelName
+        - roomName
+        - guestName
+        - guestEmail
+        - guestPhone
+        - checkIn
+        - checkOut
+        - adults
+        - totalPrice
+        - currency
+        - status
+        - createdAt

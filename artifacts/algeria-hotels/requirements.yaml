@@ -1,0 +1,25 @@
+packages:
+  "framer-motion": "For premium page transitions, scroll animations, and micro-interactions"
+  "react-hook-form": "For robust booking and search forms"
+  "@hookform/resolvers": "For Zod validation integration with react-hook-form"
+  "date-fns": "For date formatting and manipulation in booking flows"
+  "clsx": "For conditional tailwind classes"
+  "tailwind-merge": "For merging tailwind classes safely"
+
+images:
+  - path: "artifacts/algeria-hotels/public/images/logo.png"
+    description: "Elegant minimal geometric logo mark for a premium hotel brand, warm terracotta color on transparent background, no text"
+    aspect_ratio: "1:1"
+  - path: "artifacts/algeria-hotels/public/images/hero-bg.png"
+    description: "Warm, inviting Mediterranean-style luxury hotel courtyard in Algeria with terracotta tiles, lush greenery, and soft sunset lighting"
+    aspect_ratio: "16:9"
+  - path: "artifacts/algeria-hotels/public/images/about-hero.png"
+    description: "Beautiful expansive view of an oasis in the Algerian Sahara with palm trees and dunes, elegant travel photography style, warm golden hour"
+    aspect_ratio: "21:9"
+  - path: "artifacts/algeria-hotels/public/images/algiers-placeholder.png"
+    description: "Beautiful panoramic view of Algiers city with white buildings cascading down to the blue Mediterranean sea"
+    aspect_ratio: "16:9"
+
+notes:
+  - Using generated hooks from @workspace/api-client-react for all API interactions
+  - Forms use custom Zod schemas for frontend validation that map to the API requests

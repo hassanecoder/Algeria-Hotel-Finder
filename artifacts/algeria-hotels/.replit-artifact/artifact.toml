@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Algeria Hotels"
+version = "1.0.0"
+id = "artifacts/algeria-hotels"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20916
+
+[services.development]
+run = "pnpm --filter @workspace/algeria-hotels run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/algeria-hotels", "run", "build" ]
+publicDir = "artifacts/algeria-hotels/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20916"
+BASE_PATH = "/"
