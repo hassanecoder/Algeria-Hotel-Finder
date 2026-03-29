@@ -9,14 +9,25 @@ import {
 } from "@workspace/db/schema";
 
 async function seed() {
-  console.log("Seeding database...");
+  const seedMode = process.env.SEED_MODE === "bootstrap" ? "bootstrap" : "reset";
+  console.log(`Seeding database in ${seedMode} mode...`);
 
-  await db.delete(reviewsTable);
-  await db.delete(roomsTable);
-  await db.delete(bookingsTable);
-  await db.delete(hotelsTable);
-  await db.delete(citiesTable);
-  await db.delete(amenitiesTable);
+  if (seedMode === "bootstrap") {
+    const existing = await db.select().from(hotelsTable).limit(1);
+    if (existing.length > 0) {
+      console.log("Bootstrap seed skipped; hotels already present");
+      return;
+    }
+  }
+
+  if (seedMode === "reset") {
+    await db.delete(reviewsTable);
+    await db.delete(roomsTable);
+    await db.delete(bookingsTable);
+    await db.delete(hotelsTable);
+    await db.delete(citiesTable);
+    await db.delete(amenitiesTable);
+  }
 
   const amenities = await db.insert(amenitiesTable).values([
     { slug: "wifi", name: "Free Wi-Fi", icon: "Wifi" },
