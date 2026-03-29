@@ -1,0 +1,21 @@
+{
+  "name": "Algeria Hotels",
+  "short_name": "Algeria Hotels",
+  "description": "Discover and book the best hotels across Algeria. Compare prices, read reviews, and find accommodations in Algiers, Oran, Constantine, and all 58 wilayas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#B45309",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml"
+    }
+  ]
+}
