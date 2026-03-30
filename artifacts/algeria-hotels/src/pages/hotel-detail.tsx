@@ -88,7 +88,7 @@ export default function HotelDetail() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8 h-[50vh] md:h-[60vh]">
             <div className="md:col-span-2 md:row-span-2 rounded-2xl overflow-hidden relative group">
               <img 
-                src={hotel.imageUrl || "https://images.unsplash.com/photo-1542314831-c53cd3b85429?w=1200&q=80"} 
+                src={hotel.imageUrl || "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&q=80"} 
                 alt={hotel.name}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />

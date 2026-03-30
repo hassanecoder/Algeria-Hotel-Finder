@@ -17,7 +17,7 @@ export function HotelCard({ hotel }: HotelCardProps) {
       <div className="relative aspect-[4/3] overflow-hidden">
         {/* Fallback to unsplash if no image URL, though schema says it has imageUrl */}
         <img 
-          src={hotel.imageUrl || "https://images.unsplash.com/photo-1542314831-c53cd3b85429?w=800&q=80"} 
+          src={hotel.imageUrl || "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80"} 
           alt={hotel.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />

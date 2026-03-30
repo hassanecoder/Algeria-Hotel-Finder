@@ -61,7 +61,7 @@ async function seed() {
       nameAr: "الجزائر",
       region: "Alger",
       description: "The vibrant capital of Algeria, perched on the Mediterranean coast. Known as 'Algiers the White' for its gleaming hillside buildings, the city blends French colonial architecture with Berber and Ottoman heritage. Home to the UNESCO-listed Casbah, stunning bay views, and a thriving cultural scene.",
-      imageUrl: "https://images.unsplash.com/photo-1548199569-f5a027a5e38c?w=800&q=80",
+      imageUrl: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80",
     },
     {
       slug: "oran",
@@ -109,7 +109,7 @@ async function seed() {
       nameAr: "غرداية",
       region: "M'zab Valley",
       description: "A UNESCO World Heritage city in the M'zab Valley. Ghardaïa is a living museum of Ibadite Muslim culture with its five medieval walled cities. The unique pentagonal urban planning of these 11th-century ksours has influenced architects worldwide including Le Corbusier.",
-      imageUrl: "https://images.unsplash.com/photo-1537561983432-9c10a7c70dff?w=800&q=80",
+      imageUrl: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80",
     },
     {
       slug: "bejaia",
@@ -369,7 +369,7 @@ async function seed() {
       imageUrl: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&q=80",
       images: [
         "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&q=80",
-        "https://images.unsplash.com/photo-1537561983432-9c10a7c70dff?w=800&q=80",
+        "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80",
       ],
       amenities: ["wifi", "restaurant", "parking", "ac", "concierge", "airport-shuttle"],
       isFeatured: false,
@@ -391,9 +391,9 @@ async function seed() {
       reviewCount: 89,
       pricePerNight: 6500,
       currency: "DZD",
-      imageUrl: "https://images.unsplash.com/photo-1537561983432-9c10a7c70dff?w=800&q=80",
+      imageUrl: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80",
       images: [
-        "https://images.unsplash.com/photo-1537561983432-9c10a7c70dff?w=800&q=80",
+        "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80",
         "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&q=80",
       ],
       amenities: ["wifi", "restaurant", "parking", "ac", "pool", "concierge"],
@@ -645,7 +645,7 @@ async function seed() {
       bedType: "King",
       size: 40,
       amenities: ["wifi", "ac"],
-      imageUrl: "https://images.unsplash.com/photo-1537561983432-9c10a7c70dff?w=800&q=80",
+      imageUrl: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80",
     },
     {
       hotelId: hotelMap.get("hotel-rostemides-ghardaia")!,
