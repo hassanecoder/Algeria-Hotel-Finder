@@ -39,7 +39,7 @@ export default function About() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <img src="https://pixabay.com/get/g4a5cb380bd6801c7e1959238492575648b7f959f072d29e8f822ca25dc8726c93daffd1d780e740d5fd17a8a19f5b514e50b7d19ac0bba50eb5dcd3d10fb287b_1280.jpg" alt="Hotel Interior" className="rounded-2xl w-full h-64 object-cover" />
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" alt="Hotel Interior" className="rounded-2xl w-full h-64 object-cover" />
             <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80" alt="Resort Pool" className="rounded-2xl w-full h-64 object-cover mt-8" />
           </div>
         </div>
